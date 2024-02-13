@@ -28,6 +28,7 @@ def unauthorized(error) -> str:
                      "error": "Unauthorized"
                    }), 401
 
+
 @app.errorhandler(403)
 def forbidden(error) -> str:
     '''handles the 403 error'''

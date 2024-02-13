@@ -32,6 +32,7 @@ def unauthorized_endpoint() -> str:
     a new endpoit'''
     abort(401)
 
+
 @app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
 def unauthorized_route() -> str:
     '''Tests the 403 error by adding
