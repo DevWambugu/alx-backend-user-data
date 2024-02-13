@@ -31,3 +31,9 @@ def unauthorized_endpoint() -> str:
     '''Tests the 401 error by adding
     a new endpoit'''
     abort(401)
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def unauthorized_endpoint() -> str:
+    '''Tests the 403 error by adding
+    a new endpoit'''
+    abort(403)
