@@ -42,7 +42,7 @@ class BasicAuth(Auth):
         from the Base64 decoded value'''
         if (decoded_64 and isinstance(decoded_64, str) and
                 ":" in decoded_64):
-            res = decoded_64.split(":", 1)
+            res = decoded_64.rsplit(":", 1)
             if len(res) == 2:
                 return (res[0], res[1])
         return(None, None)
