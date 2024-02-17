@@ -42,10 +42,14 @@ class BasicAuth(Auth):
         from the Base64 decoded value'''
         if (decoded_64 and isinstance(decoded_64, str) and
                 ":" in decoded_64):
-            res = decoded_64.rsplit(":", 1)
+            '''res = decoded_64.rsplit(":", 1)
             if len(res) == 2:
                 return (res[0], res[1])
-        return(None, None)
+        return(None, None)'''
+            username, *password_parts = decoded_64.split(":", 1)
+            password = ":".join(password_parts)
+            return (username, password)
+        return (None, None)
 
     def user_object_from_credentials(self, user_email:
                                      str, user_pwd: str) -> TypeVar('User'):
