@@ -16,6 +16,10 @@ def _hash_password(password: str) -> str:
     """
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
+def generate_string_uuid() -> str:
+    '''returns a string representation of a new UUID'''
+    return str(uuid4())
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -38,3 +42,22 @@ class Auth:
             raise ValueError(f"User {email} already exists")
         except NoResultFound:
             return self._db.add_user(email, _hash_password(password))
+
+    def valid_login(self, email: str, password: str) -> bool:
+        ''' implements the Auth.valid_login method'''
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+        return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+
+    def create_session(self, email: str) -> str:
+        '''takes an email string argument and
+        returns the session ID as a string'''
+        try:
+            user = self._db.find_user_by(email=email)
+            sess_id = generate_string_uuid()
+            self._db.update_user(user.id, session_id=sess_id)
+            return sess_id
+        except NoResultFound:
+            return
