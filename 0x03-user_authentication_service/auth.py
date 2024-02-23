@@ -8,11 +8,6 @@ from user import User
 import bcrypt
 from uuid import uuid4
 from sqlalchemy.orm.exc import NoResultFound
-import sys
-import logging
-
-
-logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 
 def _hash_password(password: str) -> str:
@@ -65,7 +60,7 @@ class Auth:
         returns the session ID as a string'''
         try:
             user = self._db.find_user_by(email=email)
-            sess_id = generate_string_uuid()
+            sess_id = _generate_string_uuid()
             self._db.update_user(user.id, session_id=sess_id)
             return sess_id
         except NoResultFound:
