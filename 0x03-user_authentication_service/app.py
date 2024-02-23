@@ -37,7 +37,7 @@ def login() -> str:
     valid_login = Auth.valid_login(email, password)
     if valid_login:
         session_id = Auth.create_session(email)
-        response = jsonify({"email": f"{email}", "message": "logged in"})
+        response = jsonify({"email": email, "message": "logged in"})
         response.set_cookie('session_id', session_id)
         return response
     else:
