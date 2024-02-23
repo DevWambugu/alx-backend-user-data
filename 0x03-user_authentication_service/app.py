@@ -17,12 +17,12 @@ def bienvenue() -> str:
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def user() -> str:
+def users() -> str:
     '''implements the end-point to register a user'''
     email = request.form.get('email')
     password = request.form.get('password')
     try:
-        user = AUTH.register_user(email, password)
+        user = Auth.register_user(email, password)
         return jsonify({"email": user.email, "message": "user created"})
     except Exception:
         return jsonify({"message": "email already registered"}), 400
