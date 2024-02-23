@@ -9,6 +9,7 @@ import bcrypt
 from uuid import uuid4
 from sqlalchemy.orm.exc import NoResultFound
 
+
 def _hash_password(password: str) -> str:
     """
     This method that takes in a password
@@ -16,9 +17,11 @@ def _hash_password(password: str) -> str:
     """
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
+
 def generate_string_uuid() -> str:
     '''returns a string representation of a new UUID'''
     return str(uuid4())
+
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -73,7 +76,6 @@ class Auth:
         except NoResultFound:
             return
 
-
     def destroy_session(self, user_id: int) -> None:
         '''The method takes a single user_id
         integer argument and returns None'''
@@ -82,7 +84,6 @@ class Auth:
             self._db.update_user(user.id, session_id=None)
         except NoResultFound:
             pass
-
 
     def get_reset_password_token(self, email: str) -> str:
         ''' take an email string argument and returns a string.'''
@@ -93,7 +94,6 @@ class Auth:
             return reset_token
         except NoResultFound:
             raise ValueError
-
 
     def update_password(self, reset_token: str, password: str) -> None:
         '''takes reset_token string argument and a
