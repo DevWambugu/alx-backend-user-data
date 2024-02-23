@@ -8,6 +8,11 @@ from user import User
 import bcrypt
 from uuid import uuid4
 from sqlalchemy.orm.exc import NoResultFound
+import sys
+import logging
+
+
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 
 def _hash_password(password: str) -> str:
