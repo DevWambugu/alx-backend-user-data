@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """DB module
 """
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -15,6 +16,8 @@ from user import Base
 
 VALID_FIELDS = ['id', 'email', 'hashed_password', 'session_id',
                 'reset_token']
+
+
 class DB:
     """DB class
     """
@@ -40,12 +43,9 @@ class DB:
         """
         This method adds a user to the database.
         """
-        if not email or not hashed_password:
-            return
         user = User(email=email, hashed_password=hashed_password)
-        session = self._session
-        session.add(user)
-        session.commit()
+        self._session.add(user)
+        self._session.commit()
         return user
 
     def find_user_by(self, **kwargs) -> User:
@@ -62,6 +62,7 @@ class DB:
             return session.query(User).filter_by(**kwargs).one()
         except Exception:
             raise NoResultFound
+
     def update_user(self, user_id: int, **kwargs) -> None:
         """
         method that takes as argument a
