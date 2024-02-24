@@ -5,6 +5,7 @@
 from flask import request
 from typing import List, TypeVar
 from tabnanny import check
+import os
 
 
 class Auth:
@@ -36,3 +37,10 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         '''returns None'''
         return None
+
+    def session_cookie(self, request=None):
+        '''This function creates a session cookie'''
+        if request is None:
+            return None
+        session_name = os.getenv('SESSION_NAME')
+        return request.cookies.get(session_name)
