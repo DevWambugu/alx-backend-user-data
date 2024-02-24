@@ -2,8 +2,11 @@
 '''filtered_logger'''
 
 
-import logging
+from typing import List
 import re
+import logging
+from os import environ
+import mysql.connector
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -30,7 +33,8 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         '''This function formats the log record'''
-        record.msg = filter_datum(self.fields, self.REDACTION, record.msg, self.SEPARATOR)
+        record.msg = filter_datum(self.fields,
+                                  self.REDACTION, record.msg, self.SEPARATOR)
         return super().format(record)
 
 
